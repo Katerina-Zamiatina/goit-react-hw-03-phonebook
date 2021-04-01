@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Container from './components/Container';
 import Form from './components/Form';
@@ -13,6 +13,15 @@ const App = () => {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('contacts'));
+    setContacts(data);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleAddContact = newContact =>
     setContacts(prevState => [...prevState, newContact]);
